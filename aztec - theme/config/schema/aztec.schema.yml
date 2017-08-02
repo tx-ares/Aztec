@@ -1,0 +1,5 @@
+# Schema for the theme setting configuration file of the Aztec theme.
+
+aztec.settings:
+  type: theme_settings
+  label: 'Aztec settings'

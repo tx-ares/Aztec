@@ -1,0 +1,108 @@
+<?php
+
+use Drupal\Core\Url;
+
+require_once('modules/devel/kint/kint/Kint.class.php');
+
+/**
+ * @file
+ * Bootstrap sub-theme.
+ *
+ * Place your custom PHP code in this file.
+ */
+function aztec_preprocess(&$variables, $hook)
+{
+  $variables['base_path'] = base_path();
+	
+}
+
+function aztec_preprocess_views_view(&$variables) {
+	$product_view = \Drupal::request()->query->get('view');
+  $variables['product_view'] = $product_view == "" ? "grid" : $product_view;
+}
+
+function aztec_preprocess_views_view_grid(&$variables) {
+	$product_view = \Drupal::request()->query->get('view');
+  $variables['product_view'] = $product_view == "" ? "grid" : $product_view;
+}
+
+function aztec_preprocess_views_view_fields(&$variables) {
+	$view = $variables['view'];
+	
+	switch($view->id()) {
+		case "news":
+		case "latest_news":
+			$path_alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$variables['row']->nid);
+			$variables['news_url'] = $path_alias;
+			break;
+		case "videos":
+		case "latest_videos":
+		case "menu_video":
+			$path_alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$variables['row']->nid);
+			$variables['video_url'] = $path_alias;
+			break;
+		case "brands":
+			$path_alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$variables['row']->nid);
+			$variables['brand_url'] = $path_alias;
+			break;
+		case "solutions":
+			$path_alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$variables['row']->nid);
+			$variables['solution_url'] = $path_alias;
+			break;
+		case "services":
+			$path_alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$variables['row']->nid);
+			$variables['service_url'] = $path_alias;
+			break;
+		case "industries":
+			$path_alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$variables['row']->nid);
+			$variables['industry_url'] = $path_alias;
+			break;
+		case "blogs":
+			$path_alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$variables['row']->nid);
+			$variables['blogs_url'] = $path_alias;
+			break;	
+		case "products":
+		case "product_listing":
+			$path_alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$variables['row']->nid);
+			$variables['product_url'] = $path_alias;
+			
+			break;		
+	}
+}
+
+function aztec_preprocess_views_view_field(&$variables) {
+	if($variables['field']->field == 'field_sponsor_link') {
+		//Kint::dump($variables['field']);
+	}
+}
+
+function aztec_theme_suggestions_block_alter(&$suggestions, $variables) {
+  $content = $variables['elements']['content'];
+  if (isset($content['#block_content']) && $content['#block_content'] instanceof \Drupal\block_content\BlockContentInterface) {
+    $suggestions[] = 'block__' . $content['#block_content']->bundle();
+  }
+}
+
+function aztec_form_alter(&$form, $form_state, $form_id) {
+	if (strpos($form_id, 'contact_message_') !== FALSE) {
+    unset($form['actions']['preview']);
+  }
+	if ($form_id == 'contact_message_newsletter_form_form') {
+		$form['actions']['submit']['#value'] = '';
+		$form['actions']['submit']['#submit'][] = 'newsletter_form_submit';
+		//$form_state['redirect'] = 'node/215';
+  }
+	if ($form_id == 'search_form') {
+		//Kint::dump($form);
+  }
+}
+
+function newsletter_form_submit(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+    $options = ['absolute' => TRUE];
+		//$url = Drupal\Core\Url::fromRoute('entity.node.canonical', ['node' => 215], $options)->toString();
+		$url = Url::fromUserInput('/thank-you');
+		$form_state->setRedirectUrl($url);
+}
+
+
+

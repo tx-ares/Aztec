@@ -1,0 +1,86 @@
+landing:
+  label: Landing Page Layout
+  category: Page
+  path: layouts
+  template: landing
+  regions:
+    top:
+      label: top
+    title:
+      label: title
+    left:
+      label: left
+    middle:
+      label: middle  
+    right:
+      label: right
+    bottom:
+      label: bottom 
+
+subpage:
+  label: Sub Page Layout
+  category: Page
+  path: layouts
+  template: subpage
+  regions:
+    left:
+      label: left
+    right:
+      label: right
+    middle:
+      label: middle
+    bottom:
+      label: bottom
+
+styles_page:
+  label: Styles Page Layout
+  category: Page
+  path: layouts
+  template: styles_page
+  regions:
+    left:
+      label: left
+    right:
+      label: right
+ 
+events_listing:
+  label: Events Listing Page Layout
+  category: Page
+  path: layouts
+  template: events_listing
+  regions:
+    top:
+      label: top
+    bottom:
+      label: bottom
+
+news_listing:
+  label: News Listing Page Layout
+  category: Page
+  path: layouts
+  template: news_listing
+  regions:
+    top:
+      label: top
+    bottom:
+      label: bottom      
+      
+product_listing:
+  label: Product Listing Page Layout
+  category: Product
+  path: layouts
+  template: product_listing
+  regions:
+    top:
+      label: top
+    bottom:
+      label: bottom 
+
+product_detail:
+  label: Product Detail Page Layout
+  category: Product
+  path: layouts
+  template: product_detail
+  regions:
+    main:
+      label: main    

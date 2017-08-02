@@ -1,0 +1,208 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display the basic html structure of a single
+ * Drupal page.
+ *
+ * Variables:
+ * - $css: An array of CSS files for the current page.
+ * - $language: (object) The language the site is being displayed in.
+ *   $language->language contains its textual representation.
+ *   $language->dir contains the language direction. It will either be 'ltr' or
+ *   'rtl'.
+ * - $rdf_namespaces: All the RDF namespace prefixes used in the HTML document.
+ * - $grddl_profile: A GRDDL profile allowing agents to extract the RDF data.
+ * - $head_title: A modified version of the page title, for use in the TITLE
+ *   tag.
+ * - $head_title_array: (array) An associative array containing the string parts
+ *   that were used to generate the $head_title variable, already prepared to be
+ *   output as TITLE tag. The key/value pairs may contain one or more of the
+ *   following, depending on conditions:
+ *   - title: The title of the current page, if any.
+ *   - name: The name of the site.
+ *   - slogan: The slogan of the site, if any, and if there is no title.
+ * - $head: Markup for the HEAD section (including meta tags, keyword tags, and
+ *   so on).
+ * - $styles: Style tags necessary to import all CSS files for the page.
+ * - $scripts: Script tags necessary to load the JavaScript files and settings
+ *   for the page.
+ * - $page_top: Initial markup from any modules that have altered the
+ *   page. This variable should always be output first, before all other dynamic
+ *   content.
+ * - $page: The rendered page content.
+ * - $page_bottom: Final closing markup from any modules that have altered the
+ *   page. This variable should always be output last, after all other dynamic
+ *   content.
+ * - $classes String of classes that can be used to style contextually through
+ *   CSS.
+ *
+ * @ingroup templates
+ *
+ * @see bootstrap_preprocess_html()
+ * @see template_preprocess()
+ * @see template_preprocess_html()
+ * @see template_process()
+ */
+#}
+{%
+  set body_classes = [
+    logged_in ? 'user-logged-in',
+    not root_path ? 'path-frontpage' : 'path-' ~ root_path|clean_class,
+    node_type ? 'page-node-type-' ~ node_type|clean_class,
+    db_offline ? 'db-offline',
+    theme.settings.navbar_position ? 'navbar-is-' ~ theme.settings.navbar_position,
+    theme.has_glyphicons ? 'has-glyphicons',
+  ]
+%}
+<!doctype html>
+<html {{ html_attributes }}>
+<head>
+	
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<head-placeholder token="{{ placeholder_token|raw }}">
+		<title>{{ head_title|safe_join(' | ') }}</title>
+		<css-placeholder token="{{ placeholder_token|raw }}">
+		<js-placeholder token="{{ placeholder_token|raw }}">
+        <style>
+			/*html,body{opacity:0;height:1px;overflow:hidden;}*/
+        </style>
+		<!--[if IE]>
+				<link rel="stylesheet" type="text/css" href="{{ base_path ~ directory }}/css/ie.css" />
+		<![endif]-->
+		<!--[if lte IE 8]>
+			<script type="text/javascript" src="{{ base_path ~ directory }}/js/ie.min.js"></script>
+		<![endif]-->
+		<script type="text/javascript">
+			if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+				var msViewportStyle = document.createElement('style')
+				msViewportStyle.appendChild(
+					document.createTextNode(
+						'@-ms-viewport{width:auto!important}'
+					)
+				)
+				document.querySelector('head').appendChild(msViewportStyle)
+			}
+		</script>
+        
+</head>
+<body {{ attributes.addClass(body_classes) }} >
+    <noscript><div>Javascript must be enabled for the correct page display</div></noscript>
+	<a class="accessibility visually-hidden focusable skip-link" href="#main-content" accesskey="S">{{ 'Skip to main content'|t }}</a>
+    {{ page_top }}
+    <div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right">
+    	<div class="mobile-menu">
+						<form action="/search/node" method="get">
+            	<input type="text" name="keys" placeholder="Enter Search Here.." />
+                <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </form>
+        </div>
+        <div class="social">
+            <a href="https://www.facebook.com/AztecBolting/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+							<a href="https://www.linkedin.com/company/2491975" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+							<a href="https://www.youtube.com/user/AztecBoltingTools" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a>
+							<a href="https://twitter.com/aztecbolting" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+        </div>
+    </div>
+    <div id="wrapper">
+		{{ page }}
+		{{ page_bottom }}
+    </div>
+    
+	<js-bottom-placeholder token="{{ placeholder_token|raw }}">
+	<script type="text/javascript" src="//cdn.callrail.com/companies/306338543/7efe1d6023125ee28272/12/swap.js"></script>
+	<script type="text/javascript">
+	jQuery(function($) {
+    // Asynchronously Load the map API 
+    var script = document.createElement('script');
+    script.src = "//maps.googleapis.com/maps/api/js?key=AIzaSyA5rMGI9hXh5zase5lL1mvrZCnzhjxIL1o&sensor=false&callback=initialize";
+    document.body.appendChild(script);
+	});
+
+	function initialize() {
+			if (document.getElementById("map_canvas")) {
+				var map;
+				var bounds = new google.maps.LatLngBounds();
+				var mapOptions = {
+						mapTypeId: 'roadmap',
+						zoom: 5
+				};
+												
+				// Display a map on the page
+				map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+				map.setTilt(45);
+						
+				// Multiple Markers
+				var markers = [
+						['520 Dallas Street, League City, TX, 77573', 29.5109157, -95.0972325],
+						['802 N Navigation Boulevard, Suite #106 Corpus Christi, TX, 78408', 27.800425, -97.45225],
+						['1113 Lamar Street Sweetwater, TX, 79556', 32.4585951, -100.4007756],
+						['Midland, TX', 31.9973456, -102.0779146],
+						['Oklahoma City, OK', 35.4675602, -97.5164276],
+						['Lafayette, LA', 30.22409, -92.01984],
+						['Dallas / Fort Worth, TX', 32.8998091, -97.0403352]
+				];
+														
+				// Info Window Content
+				var infoWindowContent = [
+						['<div class="info_content">' +
+						'<h3>Aztec Bolting Services - Corporate Office</h3>' +
+						'<address>520 Dallas Street<br/>League City, TX 77573<br/>Phone: 281.338.2112<br/>Email: <a href="mailto:lazgarza@bolting.com">lazgarza@bolting.com</a></address>' +'</div>'],
+						['<div class="info_content">' +
+						'<h3>Aztec Bolting Services, Inc</h3>' +
+						'<address>802 N Navigation Boulevard, Suite #106<br/>Corpus Christi, TX, 78408<br/>Phone: 361-299-5803<br/>Email: <a href="mailto:arnold@bolting.com">arnold@bolting.com</a></address>' +'</div>'],
+						['<div class="info_content">' +
+						'<h3>Aztec Bolting Services, Inc</h3>' +
+						'<address>1113 Lamar Street<br />Sweetwater, TX, 79556<br/>Phone: 325-235-5300<br/>Email: <a href="mailto:glenn@bolting.com">glenn@bolting.com</a></address>' +'</div>'],
+						['<div class="info_content">' +
+						'<h3>Aztec Bolting Services, Inc</h3>' +
+						'<address>Midland, TX<br/>Phone: 817-301-5654<br/>Email: <a href="mailto:brad@bolting.com">brad@bolting.com</a></address>' +'</div>'],
+						['<div class="info_content">' +
+						'<h3>Aztec Bolting Services, Inc</h3>' +
+						'<address>Oklahoma City, OK<br/>Phone: 281-678-4225<br/>Email: <a href="mailto:valon@bolting.com">valon@bolting.com</a></address>' +'</div>'],
+						['<div class="info_content">' +
+						'<h3>Aztec Bolting Services, Inc</h3>' +
+						'<address>Lafayette, LA<br/>Phone: 281-627-1831<br/>Email: <a href="mailto:james@bolting.com">james@bolting.com</a></address>' +'</div>'],
+						['<div class="info_content">' +
+						'<h3>Aztec Bolting Services, Inc</h3>' +
+						'<address>Dallas / Fort Worth, TX<br/>Phone: (817) 301-5654<br/>Email: <a href="mailto:brad@bolting.com">brad@bolting.com</a></address>' +'</div>']
+				];
+						
+				// Display multiple markers on a map
+				var infoWindow = new google.maps.InfoWindow(), marker, i;
+				
+				// Loop through our array of markers & place each one on the map  
+				for( i = 0; i < markers.length; i++ ) {
+						var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+						bounds.extend(position);
+						marker = new google.maps.Marker({
+								position: position,
+								map: map,
+								title: markers[i][0]
+						});
+						
+						// Allow each marker to have an info window    
+						google.maps.event.addListener(marker, 'click', (function(marker, i) {
+								return function() {
+										infoWindow.setContent(infoWindowContent[i][0]);
+										infoWindow.open(map, marker);
+								}
+						})(marker, i));
+
+						// Automatically center the map fitting all markers on the screen
+						map.fitBounds(bounds);
+				}
+
+				// Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+				var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
+						this.setZoom(5);
+						google.maps.event.removeListener(boundsListener);
+				});
+			}
+		}
+	</script>
+</body>
+</html>
+
+

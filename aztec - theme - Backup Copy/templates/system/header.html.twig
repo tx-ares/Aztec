@@ -1,0 +1,13 @@
+<header>
+	<div class="container-fluid">
+		{# Top Bar #}
+		{% if page.header %}
+		{% block header %}
+
+		{{ page.header }}
+
+		{% endblock %}
+		{% endif %}
+		
+	</div>
+</header>

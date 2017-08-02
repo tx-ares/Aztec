@@ -1,0 +1,70 @@
+{#
+/**
+ * @file
+ * Theme override to display a region.
+ *
+ * Available variables:
+ * - content: The content for this region, typically blocks.
+ * - attributes: HTML attributes for the region div.
+ * - region: The name of the region variable as defined in the theme's
+ *   .info.yml file.
+ *
+ * @ingroup templates
+ *
+ * @see template_preprocess_region()
+ */
+#}
+{%
+  set classes = [
+    'region',
+    'region-' ~ region|clean_class,
+		'breadcrumbs'
+  ]
+%}
+{% if content %}
+	<div{{ attributes.addClass(classes) }}>
+			<div class="bolts"></div>
+			<div class="links-wrapper">
+					<div class="tframe fw fh">
+							<div class="trow">
+									<div class="tcell valign-mid">
+											<div class="container-fluid">
+													<div class="links">
+															{{ content }}
+													</div>
+													
+													<div class="tel-no">
+														1-866-941-0999
+													</div>
+													<div class="tel-no menu-breadcrumb">
+														<a href="/about-us/contact-us">Email Us</a>
+													</div>
+											</div>
+									</div>
+							</div>
+					</div>
+			</div>
+	</div>
+{% endif %}
+
+
+{% set url = url('<current>') %}
+{% if 'products' in url|render|render %}
+<div class="content-info title title_products ">
+	<div class="container-fluid wide">
+		<div class="txt">
+			<div class="product-listing-title">
+			{% set foo1 = url('<current>') %}
+			<h1 id="product_name_search">{{ content }}</h1>
+			{{ content }}
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+
+
+
+
+	
+	

@@ -1,0 +1,123 @@
+{#
+/**
+ * @file
+ * Default view template to display all the fields in a row.
+ *
+ * Available variables:
+ * - view: The view in use.
+ * - fields: A list of fields, each one contains:
+ *   - content: The output of the field.
+ *   - raw: The raw data for the field, if it exists. This is NOT output safe.
+ *   - class: The safe class ID to use.
+ *   - handler: The Views field handler controlling this field.
+ *   - inline: Whether or not the field should be inline.
+ *   - wrapper_element: An HTML element for a wrapper.
+ *   - wrapper_attributes: List of attributes for wrapper element.
+ *   - separator: An optional separator that may appear before a field.
+ *   - label: The field's label text.
+ *   - label_element: An HTML element for a label wrapper.
+ *   - label_attributes: List of attributes for label wrapper.
+ *   - label_suffix: Colon after the label.
+ *   - element_type: An HTML element for the field content.
+ *   - element_attributes: List of attributes for HTML element for field content.
+ *   - has_label_colon: A boolean indicating whether to display a colon after
+ *     the label.
+ *   - element_type: An HTML element for the field content.
+ *   - element_attributes: List of attributes for HTML element for field content.
+ * - row: The raw result from the query, with all data it fetched.
+ *
+ * @see template_preprocess_views_view_fields()
+ *
+ * @ingroup themeable
+ */
+#}
+<div class="frames-wrapper">
+	<div class="other-tools">
+			<div class="board"></div>
+		</div>
+	<div class="bg-tools-top">
+		</div>
+		<div class="other-tools glo">
+				<div class="gloves"></div>
+		</div>
+	<div class="other-tools">
+				<div class="paper"></div>
+				<div class="spray"></div>
+				<div class="cutter"></div>
+		</div>
+		<div class="computer-frame">
+			<div class="frame-content">
+					<div class="mouse"></div>
+					<div class="frame-images" style="background-image: url({{ fields.field_product_photo.content|striptags }}); background-position: center center; background-repeat: no-repeat;">
+							<div class="generic-slider fw fh">
+								{{ fields.field_product_gallery.content }}
+							</div>
+					</div>	
+				</div>
+		</div>
+		<div class="wood-frame">
+				<div class="txt">
+						<h1>{{ fields.title.content }}</h1>
+						<p>{{ fields.field_product_short_description.content }}</p>
+						<ul>
+								<li>Brand: <h2>{{ fields.field_product_brand.content }}</h2></li>
+								<li>Model: <span>{{ fields.field_model.content }}</span></li>
+								<li>Type: <span>{{ fields.field_product_category.content }}</span></li>
+						</ul>
+				</div>
+		</div>
+		
+</div>
+
+<div class="wood-wrapper">
+		<div class="bg-wood"></div>
+		<div class="bg-tools-below"></div>
+		<div class="bg-content">
+				<div class="top"><div class="mid"></div></div>
+				<div class="bottom">
+					<div class="shadow"></div>
+					<div class="mid">
+							<div class="responsive-tabs">
+								<nav>
+										<ul>
+												<li><a href="#desc">Description</a></li>
+												<!--<li><a href="#torq">Torque Chart</a></li>-->
+												<li><a href="#doc">Product Info</a></li>
+										</ul>
+								</nav>
+								
+								<div class="tab-content-wrapper">
+										<div id="desc" class="txt tab-content">
+												<h3 class="header">Description</h3>
+												<div class="content">
+														
+														{{ fields.body.content }}
+														
+												</div>
+										</div>
+										
+										<div id="torq" class="txt tab-content">
+												<h3 class="header">Torque Chart</h3>
+												<div class="content">
+														{{ drupal_block('torque_chart') }}
+												</div>
+										</div>
+										
+										<div id="doc" class="txt tab-content">
+												<h3 class="header">Documentation</h3>
+												<div class="content">
+														{{ fields.field_product_documents.content }}
+												</div>
+										</div>
+										
+							</div>
+						</div>
+						</div>
+						<!-- <a href="#" class="next">
+							<div class="clip-bg">
+									<span>Next <i class="fa fa-angle-right" aria-hidden="true"></i></span>
+								</div>
+						</a> -->
+				</div>
+		</div>
+</div>

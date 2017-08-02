@@ -1,0 +1,51 @@
+<footer>
+	<div class="map-wrapper">
+		<div class="container-fluid">
+			<div class="map"></div>
+		</div>
+	</div>
+	<div class="pipe-wrapper">
+		<div class="container-fluid">
+			<div class="pipe-vertical">
+				<div>
+					<span></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	{# Footer #}
+	
+	<div class="container-fluid links">
+		<div class="tframe fw">
+			<div class="trow">
+				{% if page.footer %}
+				{% block footer %}
+				{{ page.footer }}
+				{% endblock %}
+				{% endif %}
+				<div class="tcell valign-top">
+					<em>Don't Miss Out</em>
+					<span class="phone">1-866-941-0999</span>
+					<p>Complete the form below, and we'll send you an e-mail every now and again with all the latest news.</p>
+					{% if page.newsletter %}
+					{% block newsletter %}
+					{{ page.newsletter }}
+					{% endblock %}
+					{% endif %}
+					
+					<div class="social">
+						<a href="https://www.facebook.com/AztecBolting/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+							<a href="https://www.linkedin.com/company/2491975" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+							<a href="https://www.youtube.com/user/AztecBoltingTools" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a>
+							<a href="https://twitter.com/aztecbolting" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="separator"></div>
+	<div class="container-fluid">
+		<p class="copyright">Copyright &copy; {{ 'now'|date('Y') }} Aztec Bolting. All Rights Reserved.</p>
+	</div>
+</footer>

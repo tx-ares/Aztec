@@ -1,0 +1,67 @@
+{#
+/**
+ * @file
+ * Default view template to display all the fields in a row.
+ *
+ * Available variables:
+ * - view: The view in use.
+ * - fields: A list of fields, each one contains:
+ *   - content: The output of the field.
+ *   - raw: The raw data for the field, if it exists. This is NOT output safe.
+ *   - class: The safe class ID to use.
+ *   - handler: The Views field handler controlling this field.
+ *   - inline: Whether or not the field should be inline.
+ *   - wrapper_element: An HTML element for a wrapper.
+ *   - wrapper_attributes: List of attributes for wrapper element.
+ *   - separator: An optional separator that may appear before a field.
+ *   - label: The field's label text.
+ *   - label_element: An HTML element for a label wrapper.
+ *   - label_attributes: List of attributes for label wrapper.
+ *   - label_suffix: Colon after the label.
+ *   - element_type: An HTML element for the field content.
+ *   - element_attributes: List of attributes for HTML element for field content.
+ *   - has_label_colon: A boolean indicating whether to display a colon after
+ *     the label.
+ *   - element_type: An HTML element for the field content.
+ *   - element_attributes: List of attributes for HTML element for field content.
+ * - row: The raw result from the query, with all data it fetched.
+ *
+ * @see template_preprocess_views_view_fields()
+ *
+ * @ingroup themeable
+ */
+#}
+<li>
+	<a href="{{ product_url }}">
+		<div class="tframe fw fh auto">
+			<div class="trow">
+					<div class="tcell valign-top">
+							<div class="prod-img">
+										<img src="{{ fields.field_product_photo.content|striptags }}" width="360" height="215" alt="{{ fields.title.content|striptags }}" />
+										<div class="overlay">
+												<div class="tframe fw fh">
+														<div class="trow">
+																<div class="tcell valign-mid">
+																		<span class="pull-right">See<br>Details</span>
+																</div>
+														</div>
+												</div>
+										</div>
+								</div>
+						</div>
+						<div class="tcell valign-top">
+							<div class="prod-details">
+							
+										<h2>{{ fields.title.content }}</h2>
+										<ul>
+												<li>Brand: <span><h3>{{ fields.field_product_brand.content }}</h3></span></li>
+												<li>Model: <span>{{ fields.field_model.content }}</span></li>
+												<li>Type: <span>{{ fields.field_product_category.content }}</span></li>
+										</ul>
+								</div>
+						</div>
+				</div>
+		</div>
+	</a>		
+</li>		
+

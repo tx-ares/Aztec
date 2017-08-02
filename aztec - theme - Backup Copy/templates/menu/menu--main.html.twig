@@ -1,0 +1,126 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a menu.
+ *
+ * Available variables:
+ * - menu_name: The machine name of the menu.
+ * - items: A nested list of menu items. Each menu item contains:
+ *   - attributes: HTML attributes for the menu item.
+ *   - below: The menu item child items.
+ *   - title: The menu link title.
+ *   - url: The menu link url, instance of \Drupal\Core\Url
+ *   - localized_options: Menu link localized options.
+ *
+ * @ingroup templates
+ */
+#}
+{% import _self as menus %}
+
+{#
+  We call a macro which calls itself to render the full tree.
+  @see http://twig.sensiolabs.org/doc/tags/macro.html
+#}
+{{ menus.menu_links(items, attributes, 0) }}
+
+{% macro menu_links(items, attributes, menu_level) %}
+  {% import _self as menus %}
+  {% if items %}
+    {% if menu_level == 0 %}
+      <ul class="lvl0">
+		{% elseif menu_level == 1 %}
+			<div class="sub-nav-wrapper">
+			<div class="container-fluid">
+			<div class="sub-nav-content">
+			<div class="tframe fw">
+			<div class="trow">
+			<div class="tcell valign-top pos-rel">
+			  {% for item in items %}
+				{% if item.title == "Bolting Products" %}
+	              {{ drupal_view('menu_videos', 'block_1') }}
+	              {{ drupal_view('menu_videos', 'block_6') }}
+			    {% endif %}
+				{% if item.title == "Enerpac" %}
+	              {{ drupal_view('menu_videos', 'block_2') }}
+	              {{ drupal_view('menu_videos', 'block_7') }}
+			    {% endif %}
+				{% if item.title == "Torque Tool Repair" %}
+	              {{ drupal_view('menu_videos', 'block_3') }}
+	              {{ drupal_view('menu_videos', 'block_8') }}
+			    {% endif %}
+				{% if item.title == "Pipeline" %}
+	              {{ drupal_view('menu_videos', 'block_4') }}
+	              {{ drupal_view('menu_videos', 'block_9') }}
+			    {% endif %}
+				{% if item.title == "News" %}
+	              {{ drupal_view('menu_videos', 'block_5') }}
+	              {{ drupal_view('menu_videos', 'block_10') }}
+			    {% endif %}
+              {% endfor %}
+			</div>
+			<div class="tcell valign-top sub-links">
+			<ul class="lvl1">	
+    {% else %}
+      <ul class="{{ menu_level }}">
+    {% endif %}
+    {% for item in items %}
+      <li{{ item.attributes }}>
+        {{ link(item.title, item.url) }}
+        {% if item.below %}
+          {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
+        {% endif %}
+      </li>
+    {% endfor %}
+		{% if menu_level == 0 %}
+			<li class="hidden-xs">
+				<a href="/search"><i class="fa fa-search"></i></a>
+			</li>
+			<li>
+			<li>
+				{% if user_is_logged_in() %}
+				<a href="/mycertificates"><i class="fa fa-user hidden-xs"></i><span class="visible-xs">User</span></a>
+				<div class="sub-nav-wrapper">
+					<div class="container-fluid">
+						<div class="sub-nav-content">
+									<div class="tframe fw">
+											<div class="trow">
+													<div class="tcell valign-top pos-rel">
+														{{ drupal_view('menu_video', 'block_1') }}
+													</div>
+													<div class="tcell valign-top sub-links">
+														<ul>
+																<li><a href="/mycertificates">My Certificates</a></li>
+																<li><a href="/user/logout">Logout</a></li>
+														</ul>
+													</div>
+											</div>
+									</div>
+							</div>
+					</div>
+				</div>
+				{% else %}
+				<a href="/user/login"><i class="fa fa-user hidden-xs"></i><span class="visible-xs">User</span></a>
+				{% endif %}
+			</li>
+			<li>
+    </ul>
+		{% elseif menu_level == 1 %}
+		</ul>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		{% else %}
+		</ul>
+		{% endif %}
+  {% endif %}
+{% endmacro %}
+
+<div class="opener-wrapper">
+                    	<a href="#" class="menu-opener toggle-menu menu-right push-body"><span></span></a>
+                    </div>
+                    <a href="/" class="logo">
+                        <img src="{{ base_path ~ directory }}/images/logo-sm.png" width="186" height="107" />
+                    </a>
